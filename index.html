@@ -8,12 +8,30 @@
 <style>
 body { margin:0; font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#000; color:#fff; overflow-x:hidden; }
 
-header { position:relative; height:100vh; display:flex; align-items:center; padding:80px; overflow:hidden; }
+header { position:relative; height:100vh; display:flex; align-items:center; padding:80px; overflow:hidden; --overlay:0.55; }
 
 .video-bg { position:absolute; inset:0; z-index:0; }
-.video-bg video { width:100%; height:100%; object-fit:cover; filter:blur(14px) brightness(0.55); transform:scale(1.1); }
+.video-bg video {
+  width:100%; height:100%; object-fit:cover;
+  filter:blur(4px) brightness(0.6);
+  transform:scale(1.1);
+  transition:filter 0.8s ease;
+}
 
-header::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.6); z-index:1; pointer-events:none; }
+/* 🎬 Netflix hover sharpen effect */
+header:hover .video-bg video {
+  filter:blur(0px) brightness(0.65);
+}
+
+header::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,var(--overlay));
+  z-index:1;
+  pointer-events:none;
+  transition:background 0.2s ease;
+}
 
 .hero { position:relative; max-width:850px; z-index:2; }
 
@@ -78,39 +96,20 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
     align-items:flex-end;
   }
 
-  h1 {
-    font-size:40px;
-  }
+  h1 { font-size:40px; }
+  h2 { font-size:16px; }
 
-  h2 {
-    font-size:16px;
-  }
+  .big-text { font-size:18px; max-width:100%; }
 
-  .big-text {
-    font-size:18px;
-    max-width:100%;
-  }
+  section { padding:60px 20px; }
 
-  section {
-    padding:60px 20px;
-  }
+  .case h3 { font-size:24px; }
 
-  .case h3 {
-    font-size:24px;
-  }
+  .card { padding:20px; border-radius:16px; }
 
-  .card {
-    padding:20px;
-    border-radius:16px;
-  }
+  .player { width:100%; }
 
-  .player {
-    width:100%;
-  }
-
-  .share {
-    font-size:12px;
-  }
+  .share { font-size:12px; }
 }
 
 </style>
@@ -118,7 +117,7 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
 
 <body>
 
-<header>
+<header id="hero">
 <div class="video-bg">
   <video autoplay muted loop playsinline>
     <source src="https://dl.dropboxusercontent.com/scl/fi/jw6nsu023sjtczpto5h60/water.MOV?rlkey=sfci0l8h4vcx4km5xu5fthdzb&st=jyctosy2" type="video/mp4">
@@ -128,7 +127,7 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
 <div class="hero">
 <h1>Artyom Bargenov</h1>
 <h2>AI Video Creative Director</h2>
-<p class="big-text">Креативный продюсер и AI режиссер, создающий визуальные системы на стыке стратегии, технологий и культуры.</p>
+<p class="big-text">Креативный продюсер и AI‑креатор, создающий визуальные системы на стыке стратегии, технологий и культуры.</p>
 </div>
 </header>
 
@@ -157,7 +156,7 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
 
 <section class="fade">
 <h2>Обо мне</h2>
-<p class="big-text">Соединяю стратегию, AI-инструменты и визуальный язык, чтобы превращать идеи в узнаваемый контент, который можно масштабировать. Переосмысление сторителлинга и управление кросс-функциональными командами.</p>
+<p class="big-text">Креативный директор, работающий на пересечении AI, видео и культуры. Фокус — создание масштабируемых визуальных систем, переосмысление сторителлинга и управление кросс-функциональными командами.</p>
 </section>
 
 <section class="fade">
@@ -218,11 +217,21 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
 </div>
 
 <script>
+const hero = document.getElementById('hero');
+
+// Scroll-driven darkening
+window.addEventListener('scroll', ()=>{
+  const y = window.scrollY;
+  const max = 600;
+  const t = Math.min(y / max, 1);
+
+  hero.style.setProperty('--overlay', (0.55 + t * 0.35).toFixed(2));
+});
+
+// Fade in sections
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
+    if(entry.isIntersecting) entry.target.classList.add('visible');
   });
 },{ threshold: 0.15 });
 
