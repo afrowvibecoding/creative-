@@ -170,6 +170,17 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
 </div>
 
 <script>
+// Fade-in on scroll (FIX: sections were hidden due to missing observer)
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{ threshold: 0.15 });
+
+document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
+
 function openVideo(url){
   const player = document.getElementById('player');
   const modal = document.getElementById('modal');
@@ -179,7 +190,8 @@ function openVideo(url){
 }
 
 function closeVideo(){
-  document.getElementById('player').src = '';
+  const player = document.getElementById('player');
+  player.src = '';
   document.getElementById('modal').classList.remove('active');
 }
 
