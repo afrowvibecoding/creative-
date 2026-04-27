@@ -13,14 +13,8 @@ header { position:relative; height:100vh; display:flex; align-items:center; padd
 .video-bg { position:absolute; inset:0; z-index:0; }
 .video-bg video {
   width:100%; height:100%; object-fit:cover;
-  filter:blur(4px) brightness(0.6);
-  transform:scale(1.1);
-  transition:filter 0.8s ease;
-}
-
-/* 🎬 Netflix hover sharpen effect */
-header:hover .video-bg video {
-  filter:blur(0px) brightness(0.65);
+  filter:none;
+  transform:scale(1.05);
 }
 
 header::after {
@@ -39,10 +33,41 @@ h1 { font-size:72px; margin:0; line-height:1.05; }
 h2 { color:#aaa; font-weight:400; }
 .big-text { font-size:42px; max-width:950px; line-height:1.3; }
 
-section { padding:120px 80px; border-top:1px solid #111; }
+/* 🎬 Cases background system */
+.cases-section {
+  position:relative;
+  overflow:hidden;
+}
 
-.fade { opacity:0; transform:translateY(40px); transition:1s; }
-.fade.visible { opacity:1; transform:translateY(0); }
+.cases-bg {
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+
+.cases-bg video {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(22px) brightness(0.35);
+  transform:scale(1.25);
+}
+
+.cases-section::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  z-index:1;
+}
+
+.cases-content {
+  position:relative;
+  z-index:2;
+}
+
+section { padding:120px 80px; border-top:1px solid #111; opacity:0; transform:translateY(40px); transition:1s; }
+section.visible { opacity:1; transform:translateY(0); }
 
 .case { margin-bottom:90px; }
 .case h3 { font-size:34px; margin-bottom:10px; }
@@ -84,32 +109,13 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
   cursor:pointer;
 }
 
-/* =========================
-   📱 iPhone 15 / Mobile Fix
-   ========================= */
-
 @media (max-width: 768px) {
-
-  header {
-    padding:24px;
-    height:100vh;
-    align-items:flex-end;
-  }
-
+  header { padding:24px; align-items:flex-end; }
   h1 { font-size:40px; }
-  h2 { font-size:16px; }
-
   .big-text { font-size:18px; max-width:100%; }
-
   section { padding:60px 20px; }
-
-  .case h3 { font-size:24px; }
-
   .card { padding:20px; border-radius:16px; }
-
   .player { width:100%; }
-
-  .share { font-size:12px; }
 }
 
 </style>
@@ -120,134 +126,102 @@ a, button { color:#fff; text-decoration:underline; background:none; border:none;
 <header id="hero">
 <div class="video-bg">
   <video autoplay muted loop playsinline>
-    <source src="https://dl.dropboxusercontent.com/scl/fi/jw6nsu023sjtczpto5h60/water.MOV?rlkey=sfci0l8h4vcx4km5xu5fthdzb&st=jyctosy2" type="video/mp4">
+    <source src="https://dl.dropboxusercontent.com/scl/fi/itxnkyoqs14ybi03b99dj/IMG_7840.MP4?rlkey=odhz6wpyu2xmldkf0ysekwxst&st=gmi4o0ku" type="video/mp4">
   </video>
 </div>
 
 <div class="hero">
 <h1>Artyom Bargenov</h1>
 <h2>AI Video Creative Director</h2>
-<p class="big-text">Креативный продюсер и режиссер, работающий на пересечении стратегии, AI - технологий и визуальных коммуникаций. Веду проекты от концепции до реализации: задаю стратегическое направление, объединяю команды, переосмысляю сторителлинг через технологии — от иммерсивных форматов до масштабируемых AI-driven решений для видео</p>
+<p class="big-text">Креативный продюсер и режиссер, работающий на пересечении стратегии, технологий и визуальных коммуникаций.</p>
 </div>
 </header>
 
-<section class="fade">
+<section class="cases-section">
+
+<div class="cases-bg">
+  <video autoplay muted loop playsinline>
+    <source src="https://dl.dropboxusercontent.com/scl/fi/jw6nsu023sjtczpto5h60/water.MOV?rlkey=sfci0l8h4vcx4km5xu5fthdzb&st=jyctosy2" type="video/mp4">
+  </video>
+</div>
+
+<div class="cases-content">
 <h2>кейсы</h2>
 
 <div class="case">
 <h3>The Grandmother Story</h3>
 <div class="meta">AI storytelling</div>
-<p>Эмоциональный генеративный сторителлинг, построенный на AI-visual и narrative системах.</p>
-
-<button type="button" onclick="openVideo('https://player.vimeo.com/video/1186753720')">Смотреть проект ↗</button>
+<p>Эмоциональный генеративный сторителлинг.</p>
+<button onclick="openVideo('https://player.vimeo.com/video/1186753720')">Смотреть</button>
 <div class="share" onclick="copyLink('https://vimeo.com/1186753720')">Скопировать ссылку Vimeo</div>
 </div>
 
 <div class="case">
 <h3>Showreel</h3>
-<div class="meta">Креативный шоурил</div>
-<p>Подборка ключевых работ в области AI-видео, motion design и креативного продакшена.</p>
-
-<button type="button" onclick="openVideo('https://player.vimeo.com/video/1186753720')">Смотреть проект ↗</button>
+<div class="meta">AI / Motion</div>
+<p>Ключевые работы в AI видео.</p>
+<button onclick="openVideo('https://player.vimeo.com/video/1186753720')">Смотреть</button>
 <div class="share" onclick="copyLink('https://vimeo.com/1186753720')">Скопировать ссылку Vimeo</div>
 </div>
 
+</div>
 </section>
 
-<section class="fade">
+<section>
 <h2>Обо мне</h2>
-<p class="big-text">Режиссура и кинематографичный workflow интегрированный в маркетинг, моду, технологий и культуры.</p>
+<p class="big-text">Соединяю стратегию, AI и визуальный язык в масштабируемые системы.</p>
 </section>
 
-<section class="fade">
+<section>
 <h2>Опыт</h2>
-
-<div class="card">
-<h3>Technical Creative Director — Temple of Love (2023–н.в.)</h3>
-<p>AI-решения, real-time системы, управление продакшеном. Создание креативных и иммерсивных галерейных концепций. Art direction. Продюсирование event-мероприятий. Координация команд и подрядчиков. PR-менеджмент.</p>
-</div>
-
-<div class="card">
-<h3>Head of Production — SalesFinder (2022–2023)</h3>
-<p>Создание контента для онлайн-сервиса. Курирование команды специалистов. Интеграция контента в воронку.</p>
-</div>
-
-<div class="card">
-<h3>Editor / Motion Designer — МУЗ-ТВ (2021)</h3>
-<p>Создание сценариев и новых форматов для эфирных роликов. Режиссура монтажа эфирного промо-формата. Взаимодействие с выпускающей редакцией. Техническое обеспечение.</p>
-</div>
-
-<div class="card">
-<h3>Music Film Editor — 123 Production (2020–2021)</h3>
-<p>Звуковая кино-режиссура. Работа с библиотеками Sony и Warner Music. Работа с SFX. Саунд-дизайн.</p>
-</div>
-
-<div class="card">
-<h3>Content Producer — Touche Magazine (2018–2020)</h3>
-<p>Art direction. Создание новых форматов для соцсетей. Продюсирование digital-контента. Координация команд и подрядчиков. Препродакшн и постпродакшн. Управление метриками: рост аудитории, лиды, конверсии. Интеграция контента в воронку.</p>
-</div>
-
-<div class="card">
-<h3>Post-production Producer — Condé Nast Digital (2017–2018)</h3>
-<p>Режиссура монтажа. Креативные визуальные решения редакционных материалов. Подготовка материалов к публикации. Оптимизация digital-процессов. Формирование визуального стиля для Vogue, GQ, Tatler, Glamour.</p>
-</div>
-
+<div class="card">Temple of Love — Creative Director</div>
+<div class="card">SalesFinder — Head of Production</div>
+<div class="card">МУЗ-ТВ — Motion Designer</div>
 </section>
 
-<section class="fade">
+<section>
 <h2>AI Стек</h2>
-<span class="tag">Veo</span>
-<span class="tag">Kling</span>
 <span class="tag">Midjourney</span>
-<span class="tag">Suno</span>
-<span class="tag">ElevenLabs</span>
-<span class="tag">TouchDesigner</span>
-<span class="tag">After Effects</span>
+<span class="tag">Kling</span>
+<span class="tag">Veo</span>
 </section>
 
-<section class="fade">
+<section>
 <h2>Контакты</h2>
 <p>Email: your@email.com</p>
 </section>
 
-<!-- Modal Vimeo -->
 <div class="modal" id="modal">
-  <iframe class="player" id="player" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  <iframe class="player" id="player"></iframe>
   <div class="close" onclick="closeVideo()">Закрыть</div>
 </div>
 
 <script>
-const hero = document.getElementById('hero');
 
-// Scroll-driven darkening
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+},{ threshold:0.2 });
+
+document.querySelectorAll('section').forEach(s=>observer.observe(s));
+
 window.addEventListener('scroll', ()=>{
   const y = window.scrollY;
   const max = 600;
   const t = Math.min(y / max, 1);
-
-  hero.style.setProperty('--overlay', (0.55 + t * 0.35).toFixed(2));
+  document.getElementById('hero').style.setProperty('--overlay', (0.55 + t * 0.35).toFixed(2));
 });
-
-// Fade in sections
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting) entry.target.classList.add('visible');
-  });
-},{ threshold: 0.15 });
-
-document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
 
 function openVideo(url){
   const player = document.getElementById('player');
   const modal = document.getElementById('modal');
-
-  player.src = url + '?autoplay=1&muted=1';
+  player.src = url + '?autoplay=1';
   modal.classList.add('active');
 }
 
 function closeVideo(){
-  const player = document.getElementById('player');
-  player.src = '';
+  document.getElementById('player').src='';
   document.getElementById('modal').classList.remove('active');
 }
 
@@ -255,6 +229,7 @@ function copyLink(url){
   navigator.clipboard.writeText(url);
   alert('Ссылка скопирована');
 }
+
 </script>
 
 </body>
